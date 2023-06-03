@@ -1,4 +1,4 @@
-package tile;
+package org.example.gaming2d.tile;
 
 import org.example.gaming2d.GamePanel;
 
