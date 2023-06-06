@@ -16,7 +16,7 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    int hasKey = 0;
+    public int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -27,12 +27,12 @@ public class Player extends Entity {
 
         //player area collision
         solidArea = new Rectangle();
-        solidArea.x = 8;
-        solidArea.y = 16;
+        solidArea.x = 5;
+        solidArea.y = 10;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 32;
-        solidArea.height = 32;
+        solidArea.width = 20;
+        solidArea.height = 20;
 
         setDefaultValues();
         getPlayerImage();
@@ -158,13 +158,16 @@ public class Player extends Entity {
                     gp.playSoundEffect(1);
                     hasKey++;
                     gp.obj[i] = null;
-                    System.out.println("Key:"+hasKey);
+                    gp.ui.showMessage("You got the keys to the streets!");
                     break;
                 case "Door":
                     if (hasKey > 0) {
                         gp.playSoundEffect(3);
                         gp.obj[i] = null;
                         hasKey--;
+                        gp.ui.showMessage("You open the door cuzz!");
+                    } else {
+                        gp.ui.showMessage("STUPID!!! Find the keys to the streets!");
                     }
                     System.out.println("Key:"+hasKey);
                     break;
@@ -172,6 +175,12 @@ public class Player extends Entity {
                     gp.playSoundEffect(2);
                     speed += 2;
                     gp.obj[i] = null;
+                    gp.ui.showMessage("I'M FAST AS F*&K BOYY!!!");
+                    break;
+                case "Chest":
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    gp.playSoundEffect(4);
                     break;
             }
         }
