@@ -13,6 +13,7 @@ public class NPC_OldMan extends Entity {
         speed = 1;
 
         getImage();
+        setDialogue();
     }
 
     public void getImage() {
@@ -25,6 +26,13 @@ public class NPC_OldMan extends Entity {
         left2 = setup("/npc/oldman_left_2");
         right1 = setup("/npc/oldman_right_1");
         right2 = setup("/npc/oldman_right_2");
+    }
+
+    public void setDialogue() {
+        dialogues[0] =  "What's up party animal!?!?!";
+        dialogues[1] =  "I got these MAGICAL MUSHROOMS!!";
+        dialogues[2] =  "Are you trying to trip and \nshroom out with me?! \nI'm just a shroom wizard.";
+        dialogues[3] =  "Well, more magic mushroom \nfor me!!!!";
     }
 
     public void setAction() {
@@ -49,5 +57,11 @@ public class NPC_OldMan extends Entity {
             }
             actionLockCounter = 0;
         }
+    }
+    public void speak() {
+
+        //DO this character specific stuff
+        super.speak();
+
     }
 }

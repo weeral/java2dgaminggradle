@@ -16,7 +16,7 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-//    public int hasKey = 0; // key treasure
+    //    public int hasKey = 0; // key treasure
     int standCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -75,55 +75,55 @@ public class Player extends Entity {
         if (keyH.upPressed == true || keyH.downPressed == true ||
                 keyH.leftPressed == true || keyH.rightPressed == true) { // player sprite doesnt move until moved
 
-        if (keyH.upPressed == true) {
-            direction = "up";
-        } else if (keyH.downPressed == true) {
-            direction = "down";
-        } else if (keyH.leftPressed == true) {
-            direction = "left";
-        } else if (keyH.rightPressed) {
-            direction = "right";
+            if (keyH.upPressed == true) {
+                direction = "up";
+            } else if (keyH.downPressed == true) {
+                direction = "down";
+            } else if (keyH.leftPressed == true) {
+                direction = "left";
+            } else if (keyH.rightPressed) {
+                direction = "right";
 
-        }
-        // CHECK TILE COLLISION
-        collisionOn = false;
-        gp.cChecker.checkTile(this);
-
-        //CHECK OBJECT COLLISION
-        int objIndex = gp.cChecker.checkObject(this, true);
-        pickUpObject(objIndex);
-
-        // CHECK NPC COLLISION
-        int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
-        interactNPC(npcIndex);
-
-        // IF COLLISION IS FALSE, PLAYER CAN MOVE
-        if (collisionOn == false) {
-            switch (direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
             }
-        }
+            // CHECK TILE COLLISION
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
 
-        spriteCounter++;
-        if (spriteCounter > 12) {
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 1;
+            //CHECK OBJECT COLLISION
+            int objIndex = gp.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
+
+            // CHECK NPC COLLISION
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
+
+            // IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if (collisionOn == false) {
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
             }
-            spriteCounter = 0;
-        }
+
+            spriteCounter++;
+            if (spriteCounter > 12) {
+                if (spriteNum == 1) {
+                    spriteNum = 2;
+                } else if (spriteNum == 2) {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
+            }
 
 
 //        if (keyH.upPressed == true || keyH.downPressed == true ||
@@ -158,9 +158,9 @@ public class Player extends Entity {
 //
 //        }
 
-    }
+        }
 
-}
+    }
 
     public void pickUpObject(int i) {
         if (i != 999) {
@@ -205,11 +205,15 @@ public class Player extends Entity {
 
     public void interactNPC(int i) {
         if (i != 999) {
-            System.out.println("Get the F*%k out my way!");
+            if (gp.keyH.enterPressed == true) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
         }
+        gp.keyH.enterPressed = false;
     }
 
-    public void draw(Graphics2D g2){
+    public void draw(Graphics2D g2) {
 //        g2.setColor(Color.white);
 //        g2.fillRect(x, y, gp.tileSize, gp.tileSize);
         BufferedImage image = null;
