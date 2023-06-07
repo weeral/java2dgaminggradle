@@ -30,9 +30,9 @@ public class NPC_OldMan extends Entity {
 
     public void setDialogue() {
         dialogues[0] =  "What's up party animal!?!?!";
-        dialogues[1] =  "I got these MAGICAL MUSHROOMS!!";
+        dialogues[1] =  "I got these MAGICAL \nMUSHROOMS!!";
         dialogues[2] =  "Are you trying to trip and \nshroom out with me?! \nI'm just a shroom wizard.";
-        dialogues[3] =  "Well, more magic mushroom \nfor me!!!!";
+        dialogues[3] =  "Well, more magic mushroom \nfor me!!!! WEeeeEEeeee!!!";
     }
 
     public void setAction() {
