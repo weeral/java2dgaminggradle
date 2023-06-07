@@ -17,7 +17,8 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    public int hasKey = 0;
+//    public int hasKey = 0; // key treasure
+    int standCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -160,38 +161,42 @@ public class Player extends Entity {
 
     public void pickUpObject(int i) {
         if (i != 999) {
-            String objectName = gp.obj[i].name;
 
-            switch (objectName) {
-                case "Key":
-                    gp.playSoundEffect(1);
-                    hasKey++;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You got the keys to the streets!");
-                    break;
-                case "Door":
-                    if (hasKey > 0) {
-                        gp.playSoundEffect(3);
-                        gp.obj[i] = null;
-                        hasKey--;
-                        gp.ui.showMessage("You open the door cuzz!");
-                    } else {
-                        gp.ui.showMessage("STUPID!!! Find the keys to the streets!");
-                    }
-                    System.out.println("Key:"+hasKey);
-                    break;
-                case "Boots":
-                    gp.playSoundEffect(2);
-                    speed += 2;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("I'M FAST AS F*&K BOYY!!!");
-                    break;
-                case "Chest":
-                    gp.ui.gameFinished = true;
-                    gp.stopMusic();
-                    gp.playSoundEffect(4);
-                    break;
-            }
+            //key treasure
+//        if (i != 999) {
+//            String objectName = gp.obj[i].name;
+//
+//            switch (objectName) {
+//                case "Key":
+//                    gp.playSoundEffect(1);
+//                    hasKey++;
+//                    gp.obj[i] = null;
+//                    gp.ui.showMessage("You got the keys to the streets!");
+//                    break;
+//                case "Door":
+//                    if (hasKey > 0) {
+//                        gp.playSoundEffect(3);
+//                        gp.obj[i] = null;
+//                        hasKey--;
+//                        gp.ui.showMessage("You open the door cuzz!");
+//                    } else {
+//                        gp.ui.showMessage("STUPID!!! Find the keys to the streets!");
+//                    }
+//                    System.out.println("Key:"+hasKey);
+//                    break;
+//                case "Boots":
+//                    gp.playSoundEffect(2);
+//                    speed += 2;
+//                    gp.obj[i] = null;
+//                    gp.ui.showMessage("I'M FAST AS F*&K BOYY!!!");
+//                    break;
+//                case "Chest":
+//                    gp.ui.gameFinished = true;
+//                    gp.stopMusic();
+//                    gp.playSoundEffect(4);
+//                    break;
+//            }
+//        }
         }
     }
 
