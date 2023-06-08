@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // GAME STATE
     public int gameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
@@ -71,9 +72,9 @@ public class GamePanel extends JPanel implements Runnable{
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
-        playMusic(0);
+//        playMusic(0);
 //        stopMusic();
-        gameState = playState;
+        gameState = titleState;
     }
 
     public void startGameThread() {
@@ -82,34 +83,6 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     @Override
-//    public void run() {
-//        double drawInterval = 1000000000/FPS; //0.01666
-//        double nextDrawTime = System.nanoTime() + drawInterval;
-//
-//        while (gameThread != null) {
-//
-//            // 1. UPDATE: update information such as character positions
-//            update();
-//            // 2. DRAW: draw the screen with the updated information
-//            repaint();
-//
-//            try {
-//                double remainingTime = nextDrawTime - System.nanoTime();
-//                remainingTime = remainingTime / 1000000;
-//
-//                if (remainingTime < 0) {
-//                    remainingTime = 0;
-//                }
-//
-//                Thread.sleep((long) remainingTime);
-//                nextDrawTime += drawInterval;
-//
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
     // Delta/Accumulator method (create decent game room
     public void run() {
         double drawInterval = 1000000000/FPS;
@@ -139,6 +112,36 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
     }
+
+    //Original game room
+    //    public void run() {
+//        double drawInterval = 1000000000/FPS; //0.01666
+//        double nextDrawTime = System.nanoTime() + drawInterval;
+//
+//        while (gameThread != null) {
+//
+//            // 1. UPDATE: update information such as character positions
+//            update();
+//            // 2. DRAW: draw the screen with the updated information
+//            repaint();
+//
+//            try {
+//                double remainingTime = nextDrawTime - System.nanoTime();
+//                remainingTime = remainingTime / 1000000;
+//
+//                if (remainingTime < 0) {
+//                    remainingTime = 0;
+//                }
+//
+//                Thread.sleep((long) remainingTime);
+//                nextDrawTime += drawInterval;
+//
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
     public void update() {
         if (gameState == playState) {
             // PLAYER
@@ -166,29 +169,38 @@ public class GamePanel extends JPanel implements Runnable{
             drawStart = System.nanoTime();
         }
 
+        // TITLE SCREEN
+        if (gameState == titleState) {
+            ui.draw(g2);
 
-        //TILE
-        tileM.draw(g2); //must be before player, its layers on top
+        }
+        // OTHERS
+        else {
+            //TILE
+            tileM.draw(g2); //must be before player, its layers on top
 
-        //OBJECT
-        for (int i = 0; i < obj.length; i++) {
-            if (obj[i] != null) {
-                obj[i].draw(g2, this);
+            //OBJECT
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
             }
+
+            //NPC
+            for (int i = 0; i < npc.length ; i++) {
+                if (npc[i] != null) {
+                    npc[i].draw(g2);
+                }
+            }
+
+            // PLAYER
+            player.draw(g2);
+
+            //UI
+            ui.draw(g2);
+
         }
 
-        //NPC
-        for (int i = 0; i < npc.length ; i++) {
-            if (npc[i] != null) {
-                npc[i].draw(g2);
-            }
-        }
-
-        // PLAYER
-        player.draw(g2);
-
-        //UI
-        ui.draw(g2);
 
         //DEBUG
         if (keyH.checkDrawTime == true) {
