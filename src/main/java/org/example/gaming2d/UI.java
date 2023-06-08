@@ -86,7 +86,7 @@ public class UI {
     public void drawPlayerLife() {
 
         //Display player life test
-        gp.player.life = 4;
+//        gp.player.life = 4;
 
         int x = gp.tileSize/2;
         int y = gp.tileSize/2;

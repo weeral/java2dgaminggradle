@@ -28,12 +28,12 @@ public class Player extends Entity {
 
         //player area collision
         solidArea = new Rectangle();
-        solidArea.x = 5;
-        solidArea.y = 10;
+        solidArea.x = 8;
+        solidArea.y = 16;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 20;
-        solidArea.height = 20;
+        solidArea.width = 30;
+        solidArea.height = 30;
 
         setDefaultValues();
         getPlayerImage();
@@ -100,6 +100,11 @@ public class Player extends Entity {
             // CHECK NPC COLLISION
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
+
+            // CHECK EVENT
+            gp.eventHandler.checkEvent();
+
+            gp.keyH.enterPressed = false;
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (collisionOn == false) {
@@ -214,7 +219,6 @@ public class Player extends Entity {
                 gp.npc[i].speak();
             }
         }
-        gp.keyH.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) {
