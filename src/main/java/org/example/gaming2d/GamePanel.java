@@ -2,11 +2,12 @@ package org.example.gaming2d;
 
 import org.example.gaming2d.entity.Entity;
 import org.example.gaming2d.entity.Player;
-import org.example.gaming2d.object.SuperObject;
 import org.example.gaming2d.tile.TileManager;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GamePanel extends JPanel implements Runnable{
     // SCREEN SETTINGS
@@ -45,8 +46,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
-    public SuperObject obj[] = new SuperObject[10]; // how many object will show up
+    public Entity obj[] = new Entity[10]; // how many object will show up
     public Entity npc[] = new Entity[10];
+    ArrayList<Entity> entityList = new ArrayList<>();
 
     // GAME STATE
     public int gameState;
@@ -180,22 +182,60 @@ public class GamePanel extends JPanel implements Runnable{
             //TILE
             tileM.draw(g2); //must be before player, its layers on top
 
-            //OBJECT
-            for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].draw(g2, this);
-                }
-            }
-
-            //NPC
+            // ADD ENTITIES TO THE LIST
+            entityList.add(player);
             for (int i = 0; i < npc.length ; i++) {
                 if (npc[i] != null) {
-                    npc[i].draw(g2);
+                    entityList.add(npc[i]);
                 }
             }
 
-            // PLAYER
-            player.draw(g2);
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    entityList.add(obj[i]);
+                }
+            }
+            // SORT
+            Collections.sort(entityList, new Comparator<Entity>() {
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    int result = Integer.compare(e1.worldY, e2.worldX);
+                    return result;
+                }
+            });
+            // DRAW ENTITIES
+            for (int i = 0; i < entityList.size(); i++) {
+                entityList.get(i).draw(g2);
+            }
+            // EMPTY ENTITY LIST
+            for (int i = 0; i < entityList.size(); i++) {
+                entityList.remove(i);
+
+            }
+//            //OBJECT
+//            for (int i = 0; i < obj.length; i++) {
+//                if (obj[i] != null) {
+//                    obj[i].draw(g2, this);
+//                }
+//            }
+//
+//            //NPC
+//            for (int i = 0; i < npc.length ; i++) {
+//                if (npc[i] != null) {
+//                    int npcY = npc[i].worldY; //
+//                    if (playerY < npcY) { // if player is above npc, draw npc later
+//                        player.draw(g2);
+//                        npc[i].draw(g2);
+//                    }
+//                    else {
+//                        npc[i].draw(g2);
+//                        player.draw(g2);
+//                    }
+//                }
+//            }
+//
+//            // PLAYER
+//            player.draw(g2);
 
             //UI
             ui.draw(g2);
