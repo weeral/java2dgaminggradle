@@ -25,9 +25,7 @@ public class KeyHandler implements KeyListener {
 
         // TITLE STATE
         if (gp.gameState == gp.titleState) {
-
-
-        if (gp.ui.titleScreenState == 0) {
+          if (gp.ui.titleScreenState == 0) {
             if (gp.gameState == gp.titleState) {
                 if (code == KeyEvent.VK_W) {
                     gp.ui.commandNum--;
@@ -88,12 +86,10 @@ public class KeyHandler implements KeyListener {
                     }
                 }
             }
-
-
         }
 
         // PLAY STATE
-        if (gp.gameState == gp.playState) {
+        else if (gp.gameState == gp.playState) {
             if (code == KeyEvent.VK_W) {
                 upPressed = true;
             }

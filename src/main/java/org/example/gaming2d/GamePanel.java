@@ -222,10 +222,7 @@ public class GamePanel extends JPanel implements Runnable{
                 entityList.get(i).draw(g2);
             }
             // EMPTY ENTITY LIST
-            for (int i = 0; i < entityList.size(); i++) {
-                entityList.remove(i);
-
-            }
+            entityList.clear();
 //            //OBJECT
 //            for (int i = 0; i < obj.length; i++) {
 //                if (obj[i] != null) {
