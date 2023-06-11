@@ -87,6 +87,7 @@ public class EventHandler {
 
     public void teleport(int col, int row, int gameState) {
         gp.gameState = gameState;
+        gp.playSoundEffect(8);
         gp.ui.currentDialogue = "ZoOm! zOoM! ZiP!!!";
         gp.player.worldX = gp.tileSize * 37;
         gp.player.worldY = gp.tileSize * 10;
@@ -95,6 +96,7 @@ public class EventHandler {
 
     public void damagePit(int col, int row, int gameState) {
         gp.gameState = gameState;
+        gp.playSoundEffect(6);
         gp.ui.currentDialogue = "You falling into a pit!!!";
         gp.player.life -= 1;
 //        eventRect[col][row].eventDone = true;
@@ -104,6 +106,8 @@ public class EventHandler {
     public void healingPool(int col, int row, int gameState) {
         if(gp.keyH.enterPressed == true) {
             gp.gameState = gameState;
+            gp.player.attackCanceled = true;
+            gp.playSoundEffect(2);
             gp.ui.currentDialogue = "You drink from the Epstein's \npond. Your life has been \nrestored! YOUNG KID'S SOUL \nJUICE, YUMMM!!!";
             gp.player.life = gp.player.maxLife;
         }

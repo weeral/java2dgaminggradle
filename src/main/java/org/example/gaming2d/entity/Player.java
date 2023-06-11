@@ -3,6 +3,8 @@ package org.example.gaming2d.entity;
 import org.example.gaming2d.GamePanel;
 import org.example.gaming2d.KeyHandler;
 import org.example.gaming2d.UtilityTool;
+import org.example.gaming2d.object.OBJ_Shield_Wood;
+import org.example.gaming2d.object.OBJ_Sword_Normal;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,6 +20,7 @@ public class Player extends Entity {
     public final int screenY;
     //    public int hasKey = 0; // key treasure
     int standCounter = 0;
+    public boolean attackCanceled = false;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -52,8 +55,25 @@ public class Player extends Entity {
         direction = "down";
 
         // PLAYER STATUS
-        maxLife = 6;
+        level = 1; // the more strength he has, the more damage he gives.
+        maxLife = 6; // the more dexterity he has, the less damage he receives.
         life = maxLife;
+        strength = 1;
+        dexterity = 1;
+        exp = 0;
+        nextLevelExp = 5;
+        coin = 0;
+        currentWeapon = new OBJ_Sword_Normal(gp);
+        currentShield = new OBJ_Shield_Wood(gp);
+        attack = getAttack(); // the total attack value is decided by strength and weapon
+        defense = getDefense(); // the total defense value is decided by dexterity and shield
+    }
+
+    public int getAttack() {
+        return attack = strength * currentWeapon.attackValue;
+    }
+    public int getDefense() {
+        return defense = dexterity * currentWeapon.defenseValue;
     }
 
     public void getPlayerImage() {
@@ -147,6 +167,13 @@ public class Player extends Entity {
                 }
             }
 
+            if (keyH.enterPressed == true && attackCanceled == false) {
+                gp.playSoundEffect(7);
+                attacking = true;
+                spriteCounter = 0;
+            }
+
+            attackCanceled = false;
             gp.keyH.enterPressed = false;
 
             spriteCounter++;
@@ -297,6 +324,7 @@ public class Player extends Entity {
     public void interactNPC(int i) {
         if (gp.keyH.enterPressed == true) {
             if (i != 999) {
+                attackCanceled = true;
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
             } else {
