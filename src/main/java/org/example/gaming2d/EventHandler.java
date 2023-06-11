@@ -110,6 +110,7 @@ public class EventHandler {
             gp.playSoundEffect(2);
             gp.ui.currentDialogue = "You drink from the Epstein's \npond. Your life has been \nrestored! YOUNG KID'S SOUL \nJUICE, YUMMM!!!";
             gp.player.life = gp.player.maxLife;
+            gp.aSetter.setMonster();
         }
     }
 }
